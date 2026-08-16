@@ -26,72 +26,76 @@
 			</div>
 		</div>
 
-		<!-- กระดานเกม -->
+		<!-- กระดานเกม/ห้องรอ -->
 		<div class="game-board hidden" id="gameBoard">
 			
-			<div class="game-status">ROUND 1: DISCARD PHASE</div>
-
-			<div class="deck-center">
-				<div class="card-back card-stack-1"></div>
-				<div class="card-back card-stack-2"></div>
+			<!-- ข้อความสถานะกลางโต๊ะ -->
+			<div class="lobby-status" id="lobbyStatus">
+				WAITING FOR PLAYERS <br>
+				<span class="status-count" id="playerCount">(1/2 minimum)</span>
 			</div>
 
+			<!-- เส้นประแสดง Empty Spot บนผ้าสักหลาด -->
+			<div class="table-spot-outline spot-top-outline">
+				<div class="outline-icon">👤</div>
+				<div class="outline-text">Empty Spot</div>
+			</div>
+			<div class="table-spot-outline spot-left-outline">
+				<div class="outline-icon">👤</div>
+				<div class="outline-text">Empty Spot</div>
+			</div>
+			<div class="table-spot-outline spot-right-outline">
+				<div class="outline-icon">👤</div>
+				<div class="outline-text">Empty Spot</div>
+			</div>
+
+			<!-- Player 1 (YOU - ด้านล่าง) -->
 			<div class="player-slot slot-bottom">
 				<div class="player-avatar active">
-					<div class="avatar-icon">👤</div>
-					<div class="hp-badge">❤️ 20</div>
+					<img src="assets/profile/avatar_dino.png" alt="Dino Avatar" class="avatar-img">
 				</div>
-				<div class="player-name" id="displayPlayerName">PLAYER 1 (YOU)</div>
-			</div>
-
-			<div class="player-slot slot-left">
-				<div class="player-avatar">
-					<div class="avatar-icon">👤</div>
+				<div class="player-info-card">
+					<div class="player-name" id="displayPlayerName">PLAYER 1 (YOU)</div>
 					<div class="hp-badge">❤️ 20</div>
-				</div>
-				<div class="player-name">PLAYER 2</div>
-				<div class="played-cards">
-					<div class="card-back"></div>
-					<div class="card-back"></div>
 				</div>
 			</div>
 
+			<!-- Player 2 (ด้านบน - เป็น Empty Spot) -->
 			<div class="player-slot slot-top">
-				<div class="player-avatar">
-					<div class="dealer-badge">D</div>
+				<div class="player-avatar empty-avatar">
 					<div class="avatar-icon">👤</div>
-					<div class="hp-badge">❤️ 20</div>
 				</div>
-				<div class="player-name">PLAYER 3</div>
-				<div class="played-cards">
-					<div class="card-back"></div>
-					<div class="card-back"></div>
+				<div class="player-info-card">
+					<div class="player-name">PLAYER 2</div>
+					<div class="hp-badge">Empty Spot</div>
 				</div>
 			</div>
 
+			<!-- Player 3 (ด้านซ้าย - เป็น Empty Spot) -->
+			<div class="player-slot slot-left">
+				<div class="player-avatar empty-avatar">
+					<div class="avatar-icon">👤</div>
+				</div>
+				<div class="player-info-card">
+					<div class="player-name">PLAYER 3</div>
+					<div class="hp-badge">Empty Spot</div>
+				</div>
+			</div>
+
+			<!-- Player 4 (ด้านขวา - เป็น Empty Spot) -->
 			<div class="player-slot slot-right">
-				<div class="player-avatar">
+				<div class="player-avatar empty-avatar">
 					<div class="avatar-icon">👤</div>
-					<div class="hp-badge">❤️ 20</div>
 				</div>
-				<div class="player-name">PLAYER 4</div>
-				<div class="played-cards">
-					<div class="card-back"></div>
-					<div class="card-back"></div>
+				<div class="player-info-card">
+					<div class="player-name">PLAYER 4</div>
+					<div class="hp-badge">Empty Spot</div>
 				</div>
 			</div>
 
-			<div class="my-hand">
-				<div class="card-item">
-					<span class="card-number">3</span>
-				</div>
-				<div class="card-item">
-					<span class="card-number">18</span>
-				</div>
-				<div class="action-buttons">
-					<button class="btn-action btn-discard">Discard</button>
-					<button class="btn-action btn-keep">Keep</button>
-				</div>
+			<!-- ปุ่มควบคุมด้านล่าง -->
+			<div class="lobby-action-container">
+				<button class="btn-start disabled" disabled>รอผู้เล่นเพิ่ม...</button>
 			</div>
 
 		</div>
