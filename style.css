@@ -1,0 +1,247 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Kanit', sans-serif, system-ui;
+}
+
+body, html {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.table-container {
+	width: 100vw;
+	height: 100vh;
+	background: url('assets/dec/wooden_table_bg.jpg') center center / 100% 100% no-repeat;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* ซ่อน Element */
+.hidden {
+	display: none !important;
+}
+
+/* Container กระดานเกม */
+.game-board {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* สถานะเกม */
+.game-status {
+	position: absolute;
+	top: 38%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #fdfbf7;
+	padding: 6px 20px;
+	border-radius: 20px;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #333;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+	z-index: 2;
+}
+
+/* กองไพ่จั่ว */
+.deck-center {
+	position: absolute;
+	top: 28%;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 6px;
+	z-index: 2;
+}
+
+.card-back {
+	width: 65px;
+	height: 90px;
+	background: #5d7a5b;
+	border: 2px solid #ffffff;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	position: relative;
+}
+
+.card-back::after {
+	content: '';
+	position: absolute;
+	inset: 4px;
+	border: 1px dashed rgba(255,255,255,0.5);
+	border-radius: 4px;
+}
+
+/* ตำแหน่งผู้เล่น */
+.player-slot {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	z-index: 3;
+}
+
+.slot-bottom { bottom: 8vh; left: 32vw; }
+.slot-left   { left: 8vw; top: 40%; }
+.slot-top    { top: 4vh; left: 50%; transform: translateX(-50%); }
+.slot-right  { right: 8vw; top: 40%; }
+
+.player-avatar {
+	width: 55px;
+	height: 55px;
+	background: #d1ded0;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	border: 2px solid #a3b8a1;
+}
+
+.player-avatar.active {
+	border: 3px solid #fce082;
+	box-shadow: 0 0 12px #fce082;
+}
+
+.avatar-icon { font-size: 1.4rem; opacity: 0.6; }
+
+.hp-badge {
+	position: absolute;
+	bottom: -10px;
+	background: #fff;
+	padding: 1px 8px;
+	border-radius: 10px;
+	font-size: 0.75rem;
+	font-weight: bold;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dealer-badge {
+	position: absolute;
+	top: -2px;
+	right: -2px;
+	background: #e5b376;
+	color: #fff;
+	font-size: 0.7rem;
+	font-weight: bold;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.player-name {
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #333;
+	margin-top: 14px;
+}
+
+.played-cards {
+	position: absolute;
+	display: flex;
+	gap: 6px;
+}
+
+.slot-left .played-cards  { left: 80px; top: 5px; }
+.slot-top .played-cards   { top: 75px; }
+.slot-right .played-cards { right: 80px; top: 5px; }
+
+/* ไพ่ในมือเรา */
+.my-hand {
+	position: absolute;
+	bottom: 8vh;
+	left: 45vw;
+	display: flex;
+	gap: 12px;
+	align-items: flex-end;
+	z-index: 4;
+}
+
+.card-item {
+	width: 80px;
+	height: 115px;
+	background: #fcfcf9;
+	border: 2px solid #4a5d48;
+	border-radius: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.card-number {
+	font-size: 2.2rem;
+	font-weight: bold;
+	color: #2c3e2b;
+}
+
+.action-buttons {
+	position: absolute;
+	bottom: -35px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 8px;
+}
+
+.btn-action {
+	padding: 4px 16px;
+	border-radius: 12px;
+	border: none;
+	background: #90a88e;
+	color: #fff;
+	font-size: 0.8rem;
+	cursor: pointer;
+}
+
+/* ป๊อปอัปกรอกชื่อ */
+.modal-overlay {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+	background: rgba(0, 0, 0, 0.15);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+}
+
+.modal-card {
+	background: #eaf0e8;
+	border: 3px solid #7a9177;
+	border-radius: 18px;
+	padding: 28px;
+	width: 400px;
+	text-align: center;
+}
+
+.input-group input {
+	width: 100%;
+	padding: 12px;
+	border-radius: 10px;
+	border: 2px solid #ded9ca;
+	margin-bottom: 18px;
+	outline: none;
+}
+
+.btn-join {
+	width: 100%;
+	padding: 12px;
+	border-radius: 10px;
+	border: 1px solid #94b291;
+	background: #b5ceb3;
+	color: #1e301d;
+	font-weight: bold;
+	cursor: pointer;
+}

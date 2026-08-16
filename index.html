@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ghyll: The Game of Numbers</title>
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class="table-container">
+
+		<!-- ป๊อปอัปกรอกชื่อ -->
+		<div class="modal-overlay" id="joinModal">
+			<div class="modal-card">
+				<h2>ยินดีต้อนรับสู่ Ghyll (WELCOME)</h2>
+				<div class="input-group">
+					<input type="text" id="playerNickname" placeholder="กรอกชื่อเล่นของคุณ (Enter your nickname)">
+				</div>
+				<button class="btn-join" id="btnJoin">🚀 เข้าร่วมโต๊ะ (JOIN TABLE)</button>
+			</div>
+		</div>
+
+		<!-- กระดานเกม -->
+		<div class="game-board hidden" id="gameBoard">
+			
+			<div class="game-status">ROUND 1: DISCARD PHASE</div>
+
+			<div class="deck-center">
+				<div class="card-back card-stack-1"></div>
+				<div class="card-back card-stack-2"></div>
+			</div>
+
+			<div class="player-slot slot-bottom">
+				<div class="player-avatar active">
+					<div class="avatar-icon">👤</div>
+					<div class="hp-badge">❤️ 20</div>
+				</div>
+				<div class="player-name" id="displayPlayerName">PLAYER 1 (YOU)</div>
+			</div>
+
+			<div class="player-slot slot-left">
+				<div class="player-avatar">
+					<div class="avatar-icon">👤</div>
+					<div class="hp-badge">❤️ 20</div>
+				</div>
+				<div class="player-name">PLAYER 2</div>
+				<div class="played-cards">
+					<div class="card-back"></div>
+					<div class="card-back"></div>
+				</div>
+			</div>
+
+			<div class="player-slot slot-top">
+				<div class="player-avatar">
+					<div class="dealer-badge">D</div>
+					<div class="avatar-icon">👤</div>
+					<div class="hp-badge">❤️ 20</div>
+				</div>
+				<div class="player-name">PLAYER 3</div>
+				<div class="played-cards">
+					<div class="card-back"></div>
+					<div class="card-back"></div>
+				</div>
+			</div>
+
+			<div class="player-slot slot-right">
+				<div class="player-avatar">
+					<div class="avatar-icon">👤</div>
+					<div class="hp-badge">❤️ 20</div>
+				</div>
+				<div class="player-name">PLAYER 4</div>
+				<div class="played-cards">
+					<div class="card-back"></div>
+					<div class="card-back"></div>
+				</div>
+			</div>
+
+			<div class="my-hand">
+				<div class="card-item">
+					<span class="card-number">3</span>
+				</div>
+				<div class="card-item">
+					<span class="card-number">18</span>
+				</div>
+				<div class="action-buttons">
+					<button class="btn-action btn-discard">Discard</button>
+					<button class="btn-action btn-keep">Keep</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
