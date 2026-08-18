@@ -1,235 +1,656 @@
+/* ==========================================================================
+    1. CORE GLOBAL STYLES
+   ========================================================================== */
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	font-family: 'Kanit', sans-serif, system-ui;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', sans-serif, system-ui;
 }
 
-body, html {
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-}
-
-.table-container {
-	width: 100vw;
-	height: 100vh;
-	background: url('assets/dec/wooden_table_bg.jpg') center center / 100% 100% no-repeat;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .hidden {
-	display: none !important;
+    display: none !important;
+}
+
+/* ==========================================================================
+    2. GAME BOARD & TABLE LAYOUT
+   ========================================================================== */
+.table-container {
+    width: 100vw;
+    height: 100vh;
+    background: url('assets/dec/wooden_table_bg.jpg') center center / 100% 100% no-repeat;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-board {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-/* ข้อความ WAITING FOR PLAYERS กลางโต๊ะ */
+/* ข้อความแสดงสถานะกลางโต๊ะ */
 .lobby-status {
-	position: absolute;
-	top: 42%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	text-align: center;
-	color: #ffffff;
-	font-size: 1.6rem;
-	font-weight: 600;
-	letter-spacing: 1px;
-	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	z-index: 2;
-	pointer-events: none;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    pointer-events: auto;
 }
 
 .status-count {
-	font-size: 1.25rem;
-	font-weight: 400;
-	opacity: 0.9;
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
 }
 
-/* กรอบ Empty Spot */
+/* กรอบ Empty Spot บนผ้าสักหลาด */
 .table-spot-outline {
-	position: absolute;
-	width: 130px;
-	height: 95px;
-	border: 2px dashed rgba(255, 255, 255, 0.35);
-	border-radius: 16px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	color: rgba(255, 255, 255, 0.45);
-	z-index: 1;
+    position: absolute;
+    width: 140px;
+    height: 90px;
+    border: 2px dashed rgba(255, 255, 255, 0.35);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.45);
+    z-index: 1;
 }
 
-.spot-top-outline   { top: 19%; left: 50%; transform: translateX(-50%); }
-.spot-left-outline  { left: 21vw; top: 44%; transform: translateY(-50%); }
-.spot-right-outline { right: 21vw; top: 44%; transform: translateY(-50%); }
+.spot-top-outline   { top: 25%; left: 50%; transform: translateX(-50%); }
+.spot-left-outline  { left: 20vw; top: 53%; transform: translateY(-50%); }
+.spot-right-outline { right: 20vw; top: 53%; transform: translateY(-50%); }
 
-.outline-icon { 
-	font-size: 1.8rem; 
-	margin-bottom: -2px; 
-}
+.outline-icon { font-size: 1.8rem; margin-bottom: -2px; }
+.outline-text { font-size: 0.8rem; }
 
-.outline-text { 
-	font-size: 0.8rem; 
-}
-
-/* ตำแหน่งผู้เล่น */
+/* ==========================================================================
+    3. PLAYER SLOTS & AVATARS
+   ========================================================================== */
 .player-slot {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	z-index: 3;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
 }
 
-.slot-bottom { 
-	bottom: 6vh; 
-	left: 31vw; 
-	transform: none; 
-}
-.slot-top    { top: 3vh; left: 50%; transform: translateX(-50%); }
-.slot-left   { left: 5vw; top: 44%; transform: translateY(-50%); }
-.slot-right  { right: 5vw; top: 44%; transform: translateY(-50%); }
+.slot-bottom { bottom: 4vh; left: 20vw; }
+.slot-top    { top: 2vh; left: 50%; transform: translateX(-50%); }
+.slot-left   { left: 4vw; top: 56%; transform: translateY(-50%); }
+.slot-right  { right: 4vw; top: 56%; transform: translateY(-50%); }
 
-/* อวตารวงกลม */
 .player-avatar {
-	width: 100px;
-	height: 100px;
-	background: #c5d3c3;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	border: 4px solid #ffffff;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-	transition: all 0.3s;
-	overflow: hidden;
+    width: 120px;
+    height: 120px;
+    background: #c5d3c3;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 4px solid #ffffff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+    transition: all 0.3s;
+    overflow: hidden;
 }
 
 .avatar-img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .player-avatar.empty-avatar {
-	background: #bcbab5;
-	border-color: #d1cfca;
-	opacity: 0.85;
+    background: #bcbab5;
+    border-color: #d1cfca;
+    opacity: 0.85;
 }
 
 .player-avatar.active {
-	border: 4px solid #fce082;
-	box-shadow: 0 0 18px #fce082;
+    border-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.avatar-icon { 
-	font-size: 2.8rem; 
-	opacity: 0.6; 
+.player-avatar.turn-active {
+    border-color: #fce082;
+    box-shadow: 0 0 25px #fce082, 0 6px 16px rgba(0, 0, 0, 0.18);
+    transform: scale(1.08);
+}
+
+.avatar-icon {
+    font-size: 3.2rem;
+    opacity: 0.6;
 }
 
 /* การ์ดป้ายชื่อผู้เล่น */
 .player-info-card {
-	background: #fdfbf7;
-	padding: 5px 14px;
-	border-radius: 10px;
-	text-align: center;
-	margin-top: 8px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    background: #fdfbf7;
+    padding: 5px 16px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .player-name {
-	font-size: 0.85rem;
-	font-weight: 600;
-	color: #333;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
 }
 
 .hp-badge {
-	font-size: 0.8rem;
-	color: #666;
+    font-size: 0.8rem;
+    color: #666;
 }
 
-/* จุดเขียวแสดงสถานะพร้อม */
-.status-dot {
-	position: absolute;
-	bottom: 4px;
-	right: 4px;
-	width: 16px;
-	height: 16px;
-	background: #52c41a;
-	border: 2px solid #ffffff;
-	border-radius: 50%;
+/* Dealer Badge */
+.dealer-badge {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    z-index: 10;
+    pointer-events: none;
 }
 
-/* ปุ่มสถานะด้านล่าง */
+.slot-top .dealer-badge    { top: -10px; left: 15px; }
+.slot-bottom .dealer-badge { top: -10px; left: 10px; }
+.slot-left .dealer-badge   { top: -10px; left: 5px; }
+.slot-right .dealer-badge  { top: -10px; right: 5px; }
+
+/* ==========================================================================
+    4. CARDS & DISCARD SPOTS
+   ========================================================================== */
+/* ไพ่ในมือเรา */
+.my-hand-container {
+    display: flex;
+    gap: 12px;
+}
+
+.card-item {
+    width: 130px;
+    height: 185px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, outline 0.2s;
+    cursor: pointer;
+}
+
+.card-item:nth-child(1) { transform: rotate(-3deg); }
+.card-item:nth-child(2) { transform: rotate(3deg); }
+
+.card-item:hover {
+    transform: translateY(-12px) scale(1.03) !important;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+
+.card-item.selected {
+    transform: translateY(-28px) scale(1.06) !important;
+    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.45);
+    outline: 4px solid #ffd700;
+    border-radius: 12px;
+}
+
+/* จุดวางไพ่ทิ้งด้านหน้าผู้เล่น */
+.my-discard-spot {
+    position: absolute;
+    bottom: 24vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    perspective: 500px;
+}
+
+/* สถานะไพ่บนโต๊ะทั่วไป */
+.discarded-card, .card-revealed, .card-back {
+    width: 90px;
+    height: 130px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: rotateX(35deg);
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+.card-back {
+    width: 80px;
+    height: 115px;
+    background: url('assets/cards/card_back.png') center center / cover no-repeat;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+}
+
+.card-revealed {
+    width: 80px;
+    height: 115px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.card-folded-back {
+    background: url('assets/cards/card_back.png') center center / cover no-repeat;
+    opacity: 0.8;
+}
+
+.card-folded {
+    opacity: 0.6;
+    filter: grayscale(30%);
+}
+
+.card-active-fight {
+    border: 3px solid #ffd700 !important;
+    box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.6) !important;
+}
+
+.card-active-lose {
+    border: 3px solid #1a1a1a !important;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.8) !important;
+    filter: brightness(0.75);
+    transition: all 0.3s ease;
+}
+
+.card-item.dealing {
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.2) !important;
+    opacity: 0;
+    transition: all 2s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 100;
+}
+
+.card-item.in-hand {
+    position: relative;
+    top: 0 !important;
+    left: 0 !important;
+    opacity: 1;
+}
+
+/* ตำแหน่งไพ่บอทคู่แข่ง */
+.opponent-hand {
+    position: absolute;
+    display: flex;
+    gap: 3px;
+    z-index: 3;
+    perspective: 600px;
+}
+
+.slot-top .opponent-hand {
+    top: 185px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.slot-left .opponent-hand {
+    left: 250px;
+    top: 45%;
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.slot-left .opponent-hand .card-back,
+.slot-left .opponent-hand .discarded-card,
+.slot-left .opponent-hand .card-revealed {
+    transform: rotateX(-10deg) rotateY(-20deg) rotateZ(-5deg);
+    box-shadow: 4px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.slot-right .opponent-hand {
+    right: 250px;
+    top: 45%;
+    transform: translateY(-50%) rotate(-90deg) rotateY(25deg);
+}
+
+.slot-right .opponent-hand .card-back,
+.slot-right .opponent-hand .discarded-card,
+.slot-right .opponent-hand .card-revealed {
+    transform: rotateX(-10deg) rotateY(20deg) rotateZ(5deg);
+    box-shadow: -4px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+    5. CONTROLS & BUTTONS
+   ========================================================================== */
+.bottom-controls-container {
+    position: absolute;
+    bottom: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 5;
+}
+
+.action-btn-group {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-action {
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+}
+
+#btnDiscard, .btn-discard {
+    background: #e65100;
+    color: #ffffff;
+}
+
+#btnDiscard:hover:not(:disabled), .btn-discard:hover:not(:disabled) {
+    background: #ff5722;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn-fold {
+    background: #546e7a;
+    color: #ffffff;
+}
+
+.btn-fold:hover {
+    background: #37474f;
+    transform: translateY(-2px);
+}
+
+.btn-fight {
+    background: #2e7d32;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(46, 125, 50, 0.5);
+}
+
+.btn-fight:hover {
+    background: #1b5e20;
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(76, 175, 80, 0.8);
+}
+
+.btn-action:disabled {
+    background: #cccccc !important;
+    color: #888888 !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+}
+
+/* Lobby Action */
 .lobby-action-container {
-	position: absolute;
-	bottom: 15vh;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 5;
+    position: absolute;
+    bottom: 12vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
 }
 
 .btn-start {
-	padding: 12px 36px;
-	border-radius: 14px;
-	border: 2px solid #7a9177;
-	background: #b5ceb3;
-	color: #1e301d;
-	font-size: 1.1rem;
-	font-weight: bold;
-	cursor: pointer;
-	box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-	transition: all 0.25s;
+    padding: 12px 36px;
+    border-radius: 14px;
+    border: 2px solid #7a9177;
+    background: #b5ceb3;
+    color: #1e301d;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: all 0.25s;
 }
 
 .btn-start.disabled {
-	background: #f3efe6;
-	border-color: #d6cfc0;
-	color: #8c8577;
-	cursor: not-allowed;
-	box-shadow: none;
+    background: #f3efe6;
+    border-color: #d6cfc0;
+    color: #8c8577;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
-/* Modal */
+/* ==========================================================================
+    6. UI OVERLAYS, MODALS & TIMER
+   ========================================================================== */
 .modal-overlay {
-	position: absolute;
-	top: 0; left: 0;
-	width: 100%; height: 100%;
-	background: rgba(0, 0, 0, 0.15);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 10;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
 .modal-card {
-	background: #eaf0e8;
-	border: 3px solid #7a9177;
-	border-radius: 18px;
-	padding: 28px;
-	width: 400px;
-	text-align: center;
+    background: #eaf0e8;
+    border: 3px solid #7a9177;
+    border-radius: 18px;
+    padding: 28px;
+    width: 400px;
+    text-align: center;
 }
 
 .input-group input {
-	width: 100%; padding: 12px; border-radius: 10px;
-	border: 2px solid #ded9ca; margin-bottom: 18px; outline: none;
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 10px;
+    border: 2px solid #ded9ca; 
+    margin-bottom: 18px; 
+    outline: none;
 }
 
 .btn-join {
-	width: 100%; padding: 12px; border-radius: 10px;
-	border: 1px solid #94b291; background: #b5ceb3;
-	color: #1e301d; font-weight: bold; cursor: pointer;
+    width: 100%; 
+    padding: 12px; 
+    border-radius: 10px;
+    border: 1px solid #94b291; 
+    background: #b5ceb3;
+    color: #1e301d; 
+    font-weight: bold; 
+    cursor: pointer;
+}
+
+/* UI ตัวจับเวลา */
+#timerDisplay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 8px 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 6px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+#timerLabel {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+#timerCount {
+    font-family: 'Fredoka', 'Kanit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #ef4444;
+}
+
+#timerDisplay.hidden {
+    display: none !important;
+}
+
+/* Avatar Modal Container */
+.avatar-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.avatar-modal.hidden {
+    display: none;
+}
+
+.avatar-modal-content {
+    background: #eef5e8;
+    border: 4px solid #8ab07d;
+    border-radius: 20px;
+    padding: 20px 30px;
+    width: 420px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: #fdfaf6;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.avatar-modal-content h3 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+/* Grid Layout 3x3 */
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.avatar-option {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.2s, border-color 0.2s;
+    margin: 0 auto;
+}
+
+.avatar-option:hover {
+    transform: scale(1.08);
+}
+
+.avatar-option.selected {
+    border-color: #f3a953;
+    box-shadow: 0 0 10px rgba(243, 169, 83, 0.8);
+    transform: scale(1.08);
+}
+
+/* Confirm Button */
+.btn-confirm-avatar {
+    background: #8ab07d;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-confirm-avatar:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-confirm-avatar:not(:disabled):hover {
+    background: #739966;
+}
+
+/* Cursor pointer บนโปรไฟล์ตัวเราเพื่อให้รู้ว่ากดเปลี่ยนได้ */
+#playerSlotBottom .player-avatar {
+    cursor: pointer;
+}
+
+/* ตัวอย่าง CSS สำหรับเช็กว่าถ้าเป็นมือถือและอยู่ในแนวตั้ง (Portrait) ให้แสดงหน้าต่างเตือน */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    .rotate-device-warning {
+        display: flex !important; /* แสดงป้ายเตือนให้พลิกจอ */
+    }
+    .table-container {
+        display: none !important; /* ซ่อนกระดานเกมไว้ก่อนจนกว่าจะพลิกแนวนอน */
+    }
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #1e1e1e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.table-container {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    background: url('assets/dec/wooden_table_bg.jpg') no-repeat center center;
+    background-size: 100% 100%; /* บังคับให้ภาพโต๊ะฟิตพอดีกับกรอบ 1280x720 เป๊ะๆ ไม่ล้น */
+    transform-origin: center center;
 }

@@ -1,107 +1,134 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Ghyll: The Game of Numbers</title>
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
-	
-	<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghyll: The Game of Numbers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="table-container">
 
-	<div class="table-container">
+        <!-- ป๊อปอัปกรอกชื่อ -->
+        <div class="modal-overlay" id="joinModal">
+            <div class="modal-card">
+                <h2>MY GHYLL WELCOME</h2>
+                <div class="input-group">
+                    <input type="text" id="playerNickname" placeholder="กรอกชื่อเล่นของคุณ (Enter your nickname)">
+                </div>
+                <button class="btn-join" id="btnJoin">🚀 เข้าร่วมโต๊ะ (JOIN TABLE)</button>
+            </div>
+        </div>
 
-		<!-- ป๊อปอัปกรอกชื่อ -->
-		<div class="modal-overlay" id="joinModal">
-			<div class="modal-card">
-				<h2>ยินดีต้อนรับสู่ Ghyll (WELCOME)</h2>
-				<div class="input-group">
-					<input type="text" id="playerNickname" placeholder="กรอกชื่อเล่นของคุณ (Enter your nickname)">
-				</div>
-				<button class="btn-join" id="btnJoin">🚀 เข้าร่วมโต๊ะ (JOIN TABLE)</button>
-			</div>
-		</div>
+        <!-- กระดานเกม -->
+        <div class="game-board hidden" id="gameBoard">
+            
+            <div class="lobby-status hidden" id="lobbyStatus">
+                <div id="readyStatusText" style="margin-bottom: 12px; font-weight: bold;">รอผู้เล่นเข้าห้อง...</div>
+                <button id="btnReadyGame" style="padding: 10px 24px; font-size: 1rem; cursor: pointer; background: #8ab07d; color: white; border: none; border-radius: 20px;">READY (พร้อม)</button>
+            </div>
 
-		<!-- กระดานเกม/ห้องรอ -->
-		<div class="game-board hidden" id="gameBoard">
-			
-			<!-- ข้อความสถานะกลางโต๊ะ -->
-			<div class="lobby-status" id="lobbyStatus">
-				WAITING FOR PLAYERS <br>
-				<span class="status-count" id="playerCount">(1/2 minimum)</span>
-			</div>
+            <div class="timer-display hidden" id="timerDisplay">
+                <span class="timer-label" id="timerLabel">PHASE 1: DISCARD</span>
+                <div class="timer-count" id="timerCount">15</div>
+            </div>
 
-			<!-- เส้นประแสดง Empty Spot บนผ้าสักหลาด -->
-			<div class="table-spot-outline spot-top-outline">
-				<div class="outline-icon">👤</div>
-				<div class="outline-text">Empty Spot</div>
-			</div>
-			<div class="table-spot-outline spot-left-outline">
-				<div class="outline-icon">👤</div>
-				<div class="outline-text">Empty Spot</div>
-			</div>
-			<div class="table-spot-outline spot-right-outline">
-				<div class="outline-icon">👤</div>
-				<div class="outline-text">Empty Spot</div>
-			</div>
+            <div class="table-spot-outline spot-top-outline">
+                <div class="outline-icon">👤</div>
+                <div class="outline-text">Empty Spot</div>
+            </div>
+            <div class="table-spot-outline spot-left-outline">
+                <div class="outline-icon">👤</div>
+                <div class="outline-text">Empty Spot</div>
+            </div>
+            <div class="table-spot-outline spot-right-outline">
+                <div class="outline-icon">👤</div>
+                <div class="outline-text">Empty Spot</div>
+            </div>
 
-			<!-- Player 1 (YOU - ด้านล่าง) -->
-			<div class="player-slot slot-bottom">
-				<div class="player-avatar active">
-					<img src="assets/profile/avatar_dino.png" alt="Dino Avatar" class="avatar-img">
-				</div>
-				<div class="player-info-card">
-					<div class="player-name" id="displayPlayerName">PLAYER 1 (YOU)</div>
-					<div class="hp-badge">❤️ 20</div>
-				</div>
-			</div>
+            <!-- Player 1 (YOU) -->
+            <div class="player-slot slot-bottom" id="playerSlotBottom">
+                <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerBottom" alt="Dealer">
+                <div class="player-avatar active">
+                    <img src="assets/profile/avatar_dino.png" alt="Dino Avatar" class="avatar-img" id="myAvatarImg">
+                </div>
+                <div class="player-info-card">
+                    <div class="player-name" id="displayPlayerName">PLAYER 1 (YOU)</div>
+                    <div class="hp-badge">❤️ 20</div>
+                </div>
+            </div>
 
-			<!-- Player 2 (ด้านบน - เป็น Empty Spot) -->
-			<div class="player-slot slot-top">
-				<div class="player-avatar empty-avatar">
-					<div class="avatar-icon">👤</div>
-				</div>
-				<div class="player-info-card">
-					<div class="player-name">PLAYER 2</div>
-					<div class="hp-badge">Empty Spot</div>
-				</div>
-			</div>
+            <!-- Player 2 (Top) -->
+            <div class="player-slot slot-top" id="playerSlotTop">
+                <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerTop" alt="Dealer">
+                <div class="player-avatar active">
+                    <img src="assets/profile/avatar_cat.png" class="avatar-img" alt="Avatar">
+                </div>
+                <div class="player-info-card">
+                    <div class="player-name">PLAYER 2</div>
+                    <div class="hp-badge">Empty Spot</div>
+                </div>
+                <div class="opponent-hand" id="handTop"></div>
+                <div class="opponent-discard-spot" id="discardTop"></div>
+            </div>
 
-			<!-- Player 3 (ด้านซ้าย - เป็น Empty Spot) -->
-			<div class="player-slot slot-left">
-				<div class="player-avatar empty-avatar">
-					<div class="avatar-icon">👤</div>
-				</div>
-				<div class="player-info-card">
-					<div class="player-name">PLAYER 3</div>
-					<div class="hp-badge">Empty Spot</div>
-				</div>
-			</div>
+            <!-- Player 3 (Left) -->
+            <div class="player-slot slot-left" id="playerSlotLeft">
+                <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerLeft" alt="Dealer">
+                <div class="player-avatar active">
+                    <img src="assets/profile/avatar_cat.png" class="avatar-img" alt="Avatar">
+                </div>
+                <div class="player-info-card">
+                    <div class="player-name">PLAYER 3</div>
+                    <div class="hp-badge">Empty Spot</div>
+                </div>
+                <div class="opponent-hand" id="handLeft"></div>
+                <div class="opponent-discard-spot" id="discardLeft"></div>
+            </div>
 
-			<!-- Player 4 (ด้านขวา - เป็น Empty Spot) -->
-			<div class="player-slot slot-right">
-				<div class="player-avatar empty-avatar">
-					<div class="avatar-icon">👤</div>
-				</div>
-				<div class="player-info-card">
-					<div class="player-name">PLAYER 4</div>
-					<div class="hp-badge">Empty Spot</div>
-				</div>
-			</div>
+            <!-- Player 4 (Right) -->
+            <div class="player-slot slot-right" id="playerSlotRight">
+                <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerRight" alt="Dealer">
+                <div class="player-avatar active">
+                    <img src="assets/profile/avatar_cat.png" class="avatar-img" alt="Avatar">
+                </div>
+                <div class="player-info-card">
+                    <div class="player-name">PLAYER 4</div>
+                    <div class="hp-badge">Empty Spot</div>
+                </div>
+                <div class="opponent-hand" id="handRight"></div>
+                <div class="opponent-discard-spot" id="discardRight"></div>
+            </div>
 
-			<!-- ปุ่มควบคุมด้านล่าง -->
-			<div class="lobby-action-container">
-				<button class="btn-start disabled" disabled>รอผู้เล่นเพิ่ม...</button>
-			</div>
+            <!-- Controls -->
+            <div class="bottom-controls-container">
+                <div id="myHandContainer" class="my-hand-container"></div>
+                <div id="discardActionGroup" class="action-btn-group hidden">
+                    <button class="btn-action btn-discard" id="btnDiscard" disabled>DISCARD (ทิ้งไพ่)</button>
+                </div>
+                <div id="decisionActionGroup" class="action-btn-group hidden">
+                    <button class="btn-action btn-fold" id="btnFold">FOLD (หมอบ)</button>
+                    <button class="btn-action btn-fight" id="btnFight">FIGHT (สู้)</button>
+                </div>
+            </div>
 
-		</div>
+            <div id="myDiscardSpot" class="my-discard-spot"></div>
+        </div>
+    </div>
 
-	</div>
+    <!-- Avatar Modal -->
+    <div id="avatarModal" class="avatar-modal hidden">
+        <div class="avatar-modal-content">
+            <button id="btnCloseAvatarModal" class="close-modal-btn">✕</button>
+            <h3>เลือกรูปโปรไฟล์ (AVATAR SELECTOR)</h3>
+            <div id="avatarGrid" class="avatar-grid"></div>
+            <button id="btnConfirmAvatar" class="btn-confirm-avatar" disabled>ยืนยัน (SELECT)</button>
+        </div>
+    </div>
 
-	<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
