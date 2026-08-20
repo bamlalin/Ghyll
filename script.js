@@ -6,17 +6,14 @@ function playClickSound() {
     clickSound.play().catch(e => console.log("รอการคลิกเพื่อปลดล็อกเสียง"));
 }
 
-// --- AUTO RESIZE & SCALE GAME (FIXED ASPECT RATIO) ---
+// --- RESPONSIVE SCALE SYSTEM ---
 function resizeGame() {
     const table = document.querySelector('.table-container');
     if (!table) return;
 
     const baseWidth = 1280;
     const baseHeight = 720;
-
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const scale = Math.min(windowWidth / baseWidth, windowHeight / baseHeight) * 0.95;
+    const scale = Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight) * 0.95;
 
     table.style.transform = `scale(${scale})`;
     table.style.transformOrigin = 'center center';
@@ -25,15 +22,7 @@ function resizeGame() {
 window.addEventListener('resize', resizeGame);
 document.addEventListener('DOMContentLoaded', resizeGame);
 
-
-// --- 1. INITIALIZATION & EVENT LISTENERS ---
-document.addEventListener('DOMContentLoaded', () => {
-    // โค้ดเดิมที่อยู่ใน DOMContentLoaded ของเดิมต่อตรงนี้ได้เลย...
-    const joinModal = document.getElementById('joinModal');
-    // ...
-});
-
-// --- 1. INITIALIZATION & EVENT LISTENERS ---
+// --- INITIALIZATION & EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
     const joinModal = document.getElementById('joinModal');
     const gameBoard = document.getElementById('gameBoard');
@@ -48,6 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnJoin?.addEventListener('click', () => {
         playClickSound();
+        window.scrollTo(0, 0);
+
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(() => {});
+        }
+
         const name = playerNickname ? playerNickname.value.trim() : '';
         if (name !== '' && displayPlayerName) {
             displayPlayerName.textContent = name.toUpperCase() + ' (YOU)';
@@ -61,23 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
         checkLobbyReady();
     });
 
-    if (btnDiscard) btnDiscard.addEventListener('click', () => {
-        playClickSound();
-        handleDiscard();
-    });
-
-    if (btnFold) btnFold.addEventListener('click', () => {
-        playClickSound();
-        handleDecision('fold');
-    });
-    if (btnFight) btnFight.addEventListener('click', () => {
-        playClickSound();
-        handleDecision('fight');
-    });
+    if (btnDiscard) btnDiscard.addEventListener('click', () => { playClickSound(); handleDiscard(); });
+    if (btnFold) btnFold.addEventListener('click', () => { playClickSound(); handleDecision('fold'); });
+    if (btnFight) btnFight.addEventListener('click', () => { playClickSound(); handleDecision('fight'); });
     if (btnNextRound) btnNextRound.addEventListener('click', startNewRound);
 });
 
-// --- 2. GAME DATA & STATE ---
+// --- GAME DATA & STATE ---
 const ALL_CARDS = [
     ...Array.from({ length: 20 }, (_, i) => ({
         id: `card_${i + 1}`,
@@ -117,7 +103,7 @@ function getMyPlayer() {
     return gameState.players.find(p => p.id === myPlayerId);
 }
 
-// --- 3. LOBBY & ROUND FLOW ---
+// --- LOBBY & ROOM MANAGEMENT ---
 function initLobbyState() {
     const nicknameEl = document.getElementById('playerNickname');
     const inputName = nicknameEl ? nicknameEl.value.trim().toUpperCase() : '';
@@ -252,7 +238,7 @@ function startNewRound() {
     }
 }
 
-// --- 4. TURN & TIMER MANAGEMENT ---
+// --- TURN & TIMER MANAGEMENT ---
 function processTurn() {
     clearInterval(turnTimer);
     const activePlayer = gameState.players[gameState.currentTurnIndex];
@@ -324,7 +310,7 @@ function handleTimeout(player) {
     }
 }
 
-// --- 5. PLAYER & BOT ACTIONS ---
+// --- PLAYER ACTIONS & GAMEPLAY ---
 function handleDiscard() {
     if (selectedCardIndex === null) return;
     clearInterval(turnTimer);
@@ -365,7 +351,7 @@ function executeBotDecision(bot) {
     nextTurn();
 }
 
-// --- 6. EVALUATION & SCORING ---
+// --- EVALUATION & SCORING ---
 function revealAndEvaluate() {
     clearInterval(turnTimer);
     document.getElementById('timerDisplay')?.classList.add('hidden');
@@ -396,7 +382,6 @@ function revealAndEvaluate() {
         const has20Star = fighters.some(f => f.is20Star);
         const has20Normal = fighters.some(f => f.value === 20 && !f.isStar);
 
-        // กฎการหักล้าง 20 โดยเว้น 20 ดาวไว้สู้ต่อ
         const is20KnockedOut = (has1Star || has1Normal) && (has20Star || has20Normal);
 
         if (is20KnockedOut) {
@@ -453,7 +438,7 @@ function getNextDealerIndex() {
     return nextIndex;
 }
 
-// --- 7. UI RENDERING ---
+// --- UI RENDERING SYSTEM ---
 function renderBoardState() {
     document.getElementById('lobbyStatus')?.classList.add('hidden');
     document.getElementById('btnStart')?.classList.add('hidden');
@@ -489,7 +474,6 @@ function renderMyHand() {
 
         cardElement.addEventListener('click', () => {
             if (gameState.phase !== 'DISCARD' || gameState.players[gameState.currentTurnIndex].id !== 'player') return;
-
             playClickSound();
 
             document.querySelectorAll('#myHandContainer .card-item').forEach(el => el.classList.remove('selected'));
@@ -783,7 +767,7 @@ function executeResetAndStart(modalElement) {
     startNewRound();
 }
 
-// --- 8. AVATAR SELECTION SYSTEM ---
+// --- AVATAR SELECTION SYSTEM ---
 document.addEventListener('DOMContentLoaded', () => {
     const mySlot = document.getElementById('playerSlotBottom');
     mySlot?.querySelector('.player-avatar')?.addEventListener('click', openAvatarModal);

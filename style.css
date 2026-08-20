@@ -10,8 +10,16 @@
 
 html, body {
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    position: fixed;
+    inset: 0;
 }
 
 .hidden {
@@ -19,12 +27,15 @@ html, body {
 }
 
 /* ==========================================================================
-    2. GAME BOARD & TABLE LAYOUT
+    2. TABLE CONTAINER & GAME BOARD SCALING
    ========================================================================== */
 .table-container {
-    width: 100vw;
-    height: 100vh;
-    background: url('assets/dec/wooden_table_bg.jpg') center center / 100% 100% no-repeat;
+    width: 1280px;
+    height: 720px;
+    background: url('assets/dec/wooden_table_bg.jpg') no-repeat center center;
+    background-size: cover;
+    transform-origin: center center;
+    flex-shrink: 0;
     position: relative;
     display: flex;
     justify-content: center;
@@ -39,7 +50,6 @@ html, body {
     left: 0;
 }
 
-/* ข้อความแสดงสถานะกลางโต๊ะ */
 .lobby-status {
     position: absolute;
     top: 40%;
@@ -90,18 +100,13 @@ html, body {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
     transition: all 0.3s;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .avatar-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.player-avatar.empty-avatar {
-    background: #bcbab5;
-    border-color: #d1cfca;
-    opacity: 0.85;
 }
 
 .player-avatar.active {
@@ -115,12 +120,6 @@ html, body {
     transform: scale(1.08);
 }
 
-.avatar-icon {
-    font-size: 3.2rem;
-    opacity: 0.6;
-}
-
-/* การ์ดป้ายชื่อผู้เล่น */
 .player-info-card {
     background: #fdfbf7;
     padding: 5px 16px;
@@ -141,7 +140,6 @@ html, body {
     color: #666;
 }
 
-/* Dealer Badge */
 .dealer-badge {
     position: absolute;
     width: 24px;
@@ -158,7 +156,6 @@ html, body {
 /* ==========================================================================
     4. CARDS & DISCARD SPOTS
    ========================================================================== */
-/* ไพ่ในมือเรา */
 .my-hand-container {
     display: flex;
     gap: 12px;
@@ -190,7 +187,6 @@ html, body {
     border-radius: 12px;
 }
 
-/* จุดวางไพ่ทิ้งด้านหน้าผู้เล่น */
 .my-discard-spot {
     position: absolute;
     bottom: 24vh;
@@ -204,7 +200,6 @@ html, body {
     perspective: 500px;
 }
 
-/* สถานะไพ่บนโต๊ะทั่วไป */
 .discarded-card, .card-revealed, .card-back {
     width: 90px;
     height: 130px;
@@ -230,11 +225,6 @@ html, body {
     height: 115px;
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-.card-folded-back {
-    background: url('assets/cards/card_back.png') center center / cover no-repeat;
-    opacity: 0.8;
 }
 
 .card-folded {
@@ -271,7 +261,6 @@ html, body {
     opacity: 1;
 }
 
-/* ตำแหน่งไพ่บอทคู่แข่ง */
 .opponent-hand {
     position: absolute;
     display: flex;
@@ -292,24 +281,10 @@ html, body {
     transform: translateY(-50%) rotate(90deg);
 }
 
-.slot-left .opponent-hand .card-back,
-.slot-left .opponent-hand .discarded-card,
-.slot-left .opponent-hand .card-revealed {
-    transform: rotateX(-10deg) rotateY(-20deg) rotateZ(-5deg);
-    box-shadow: 4px 2px 2px rgba(0, 0, 0, 0.2);
-}
-
 .slot-right .opponent-hand {
     right: 220px;
     top: 45%;
     transform: translateY(-50%) rotate(-90deg) rotateY(25deg);
-}
-
-.slot-right .opponent-hand .card-back,
-.slot-right .opponent-hand .discarded-card,
-.slot-right .opponent-hand .card-revealed {
-    transform: rotateX(-10deg) rotateY(20deg) rotateZ(5deg);
-    box-shadow: -4px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* ==========================================================================
@@ -350,7 +325,6 @@ html, body {
 #btnDiscard:hover:not(:disabled), .btn-discard:hover:not(:disabled) {
     background: #ff5722;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .btn-fold {
@@ -372,7 +346,6 @@ html, body {
 .btn-fight:hover {
     background: #1b5e20;
     transform: translateY(-2px);
-    box-shadow: 0 0 18px rgba(76, 175, 80, 0.8);
 }
 
 .btn-action:disabled {
@@ -382,38 +355,8 @@ html, body {
     box-shadow: none !important;
 }
 
-/* Lobby Action */
-.lobby-action-container {
-    position: absolute;
-    bottom: 12vh;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-}
-
-.btn-start {
-    padding: 12px 36px;
-    border-radius: 14px;
-    border: 2px solid #7a9177;
-    background: #b5ceb3;
-    color: #1e301d;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    transition: all 0.25s;
-}
-
-.btn-start.disabled {
-    background: #f3efe6;
-    border-color: #d6cfc0;
-    color: #8c8577;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
 /* ==========================================================================
-    6. UI OVERLAYS, MODALS & TIMER
+    6. MODALS & TIMER UI
    ========================================================================== */
 .modal-overlay {
     position: absolute;
@@ -455,7 +398,6 @@ html, body {
     cursor: pointer;
 }
 
-/* UI ตัวจับเวลา */
 #timerDisplay {
     position: absolute;
     top: 50%;
@@ -471,10 +413,8 @@ html, body {
     border: 2px solid #e2e8f0;
     border-radius: 16px;
     padding: 8px 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 6px rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
     pointer-events: none;
-    transition: all 0.3s ease;
 }
 
 #timerLabel {
@@ -486,24 +426,19 @@ html, body {
 }
 
 #timerCount {
-    font-family: 'Fredoka', 'Kanit', sans-serif;
     font-size: 2rem;
     font-weight: 800;
     line-height: 1;
     color: #ef4444;
 }
 
-#timerDisplay.hidden {
-    display: none !important;
-}
-
-/* Avatar Modal Container */
+/* Avatar Modal */
 .avatar-modal {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
@@ -512,15 +447,15 @@ html, body {
 }
 
 .avatar-modal.hidden {
-    display: none;
+    display: none !important;
 }
 
 .avatar-modal-content {
     background: #eef5e8;
     border: 4px solid #8ab07d;
     border-radius: 20px;
-    padding: 20px 30px;
-    width: 420px;
+    padding: 20px 25px;
+    width: 380px;
     text-align: center;
     position: relative;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -539,24 +474,17 @@ html, body {
     cursor: pointer;
 }
 
-.avatar-modal-content h3 {
-    margin-top: 5px;
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 1.1rem;
-}
-
-/* Grid Layout 3x3 */
 .avatar-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 12px; 
+    margin-bottom: 18px;
+    width: 100%;
 }
 
 .avatar-option {
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     border: 3px solid transparent;
     cursor: pointer;
@@ -576,7 +504,6 @@ html, body {
     transform: scale(1.08);
 }
 
-/* Confirm Button */
 .btn-confirm-avatar {
     background: #8ab07d;
     color: white;
@@ -586,7 +513,6 @@ html, body {
     font-weight: bold;
     border-radius: 25px;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
 .btn-confirm-avatar:disabled {
@@ -594,16 +520,9 @@ html, body {
     cursor: not-allowed;
 }
 
-.btn-confirm-avatar:not(:disabled):hover {
-    background: #739966;
-}
-
-/* Cursor pointer บนโปรไฟล์ตัวเราเพื่อให้รู้ว่ากดเปลี่ยนได้ */
-#playerSlotBottom .player-avatar {
-    cursor: pointer;
-}
-
-/* 1. เช็กถ้าเป็นมือถือแนวตั้ง ให้แสดงป้ายเตือนให้พลิกจอ */
+/* ==========================================================================
+    7. RESPONSIVE WARNING (MOBILE PORTRAIT)
+   ========================================================================== */
 @media screen and (max-width: 768px) and (orientation: portrait) {
     .rotate-device-warning {
         display: flex !important;
@@ -616,10 +535,8 @@ html, body {
 .rotate-device-warning {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     background: #111111;
     color: #ffffff;
     z-index: 99999;
@@ -629,56 +546,28 @@ html, body {
     padding: 10px;
 }
 
-.warning-content {
-    font-family: 'Kanit', sans-serif;
-}
-
 .warning-content h2 {
     margin-top: 15px;
-    align-items: center;
-    text-align: center;
     font-size: 2.5rem;
     color: #ffc400;
 }
 
 .warning-content p {
     margin-top: 8px;
-    align-items: center;
-    text-align: center;
     font-size: 1rem;
     color: #cccccc;
 }
 
 .text p {
-    margin-top: -420px;
-    font-size: 0.7rem;
+    margin-top: -320px;
+    margin-left: -80px;
+    font-size: 0.5rem;
     color: #cccccc;
 }
 
 .text2 p {
-    margin-top: 800px;
-    font-size: 0.7rem;
+    margin-top: 630px;
+    margin-right: -120px;
+    font-size: 0.4rem;
     color: #cccccc;
 }
-
-/* 2. ตั้งค่าพื้นฐานสำหรับจอคอมพิวเตอร์และหน้าจอทั่วไป */
-html, body {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background: #111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-}
-
-.table-container {
-    width: 1280px;
-    height: 720px;
-    background: url('assets/dec/wooden_table_bg.jpg') no-repeat center center;
-    background-size: cover;
-    transform-origin: center center;
-    flex-shrink: 0;
-}
-

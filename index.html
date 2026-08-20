@@ -11,25 +11,20 @@
 </head>
 <body>
     
-    <!-- ป้ายเตือนให้พลิกแนวนอน -->
+    <!-- ป้ายเตือนให้พลิกแนวนอน (มือถือแนวตั้ง) -->
     <div class="rotate-device-warning" id="rotateWarning">
-        <div class="text">
-            <p>ไปอ่านขวาล่าง</p>
-        </div>
+        <div class="text"><p>ไปอ่านขวาล่าง</p></div>
         <div class="warning-content">
             <h2>คำเตือน!</h2>
             <h2>อ่านซ้ายบน</h2>
             <p>ไม่ต้องสงสัยถ้าอยากเล่นก็พลิกซะ</p>
-            
         </div>
-        <div class="text2">
-            <p>อ่านทำไม</p>
-        </div>
+        <div class="text2"><p>อ่านทำไม</p></div>
     </div>
 
     <div class="table-container">
 
-        <!-- ป๊อปอัปกรอกชื่อ -->
+        <!-- ป๊อปอัปกรอกชื่อเข้าห้อง -->
         <div class="modal-overlay" id="joinModal">
             <div class="modal-card">
                 <h2>MY GHYLL WELCOME</h2>
@@ -40,20 +35,22 @@
             </div>
         </div>
 
-        <!-- กระดานเกม -->
+        <!-- กระดานเกมหลัก -->
         <div class="game-board hidden" id="gameBoard">
             
+            <!-- สถานะล็อบบี้และปุ่มเริ่มเกม -->
             <div class="lobby-status hidden" id="lobbyStatus">
                 <div id="readyStatusText" style="margin-bottom: 12px; font-weight: bold;">รอผู้เล่นเข้าห้อง...</div>
                 <button id="btnReadyGame" style="padding: 10px 24px; font-size: 1rem; cursor: pointer; background: #8ab07d; color: white; border: none; border-radius: 20px;">READY (พร้อม)</button>
             </div>
 
+            <!-- ตัวจับเวลาและแสดงสถานะเฟสเกม -->
             <div class="timer-display hidden" id="timerDisplay">
                 <span class="timer-label" id="timerLabel">PHASE 1: DISCARD</span>
                 <div class="timer-count" id="timerCount">15</div>
             </div>
 
-            <!-- Player 1 (YOU) -->
+            <!-- ผู้เล่นที่ 1 (ตัวเรา - ล่าง) -->
             <div class="player-slot slot-bottom" id="playerSlotBottom">
                 <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerBottom" alt="Dealer">
                 <div class="player-avatar active">
@@ -65,7 +62,7 @@
                 </div>
             </div>
 
-            <!-- Player 2 (Top) -->
+            <!-- ผู้เล่นที่ 2 (บน) -->
             <div class="player-slot slot-top" id="playerSlotTop">
                 <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerTop" alt="Dealer">
                 <div class="player-avatar active">
@@ -79,7 +76,7 @@
                 <div class="opponent-discard-spot" id="discardTop"></div>
             </div>
 
-            <!-- Player 3 (Left) -->
+            <!-- ผู้เล่นที่ 3 (ซ้าย) -->
             <div class="player-slot slot-left" id="playerSlotLeft">
                 <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerLeft" alt="Dealer">
                 <div class="player-avatar active">
@@ -93,7 +90,7 @@
                 <div class="opponent-discard-spot" id="discardLeft"></div>
             </div>
 
-            <!-- Player 4 (Right) -->
+            <!-- ผู้เล่นที่ 4 (ขวา) -->
             <div class="player-slot slot-right" id="playerSlotRight">
                 <img src="assets/icon/D-badge.png" class="dealer-badge hidden" id="dealerRight" alt="Dealer">
                 <div class="player-avatar active">
@@ -107,7 +104,7 @@
                 <div class="opponent-discard-spot" id="discardRight"></div>
             </div>
 
-            <!-- Controls -->
+            <!-- พื้นที่ควบคุมและไพ่ในมือเรา -->
             <div class="bottom-controls-container">
                 <div id="myHandContainer" class="my-hand-container"></div>
                 <div id="discardActionGroup" class="action-btn-group hidden">
@@ -121,16 +118,17 @@
 
             <div id="myDiscardSpot" class="my-discard-spot"></div>
         </div>
-    </div>
 
-    <!-- Avatar Modal -->
-    <div id="avatarModal" class="avatar-modal hidden">
-        <div class="avatar-modal-content">
-            <button id="btnCloseAvatarModal" class="close-modal-btn">✕</button>
-            <h3>AVATAR SELECTOR</h3>
-            <div id="avatarGrid" class="avatar-grid"></div>
-            <button id="btnConfirmAvatar" class="btn-confirm-avatar" disabled>SELECT</button>
+        <!-- หน้าต่างเลือกรูปโปรไฟล์ (Avatar Modal) -->
+        <div id="avatarModal" class="avatar-modal hidden">
+            <div class="avatar-modal-content">
+                <button id="btnCloseAvatarModal" class="close-modal-btn">✕</button>
+                <h3>AVATAR SELECTOR</h3>
+                <div id="avatarGrid" class="avatar-grid"></div>
+                <button id="btnConfirmAvatar" class="btn-confirm-avatar" disabled>SELECT</button>
+            </div>
         </div>
+
     </div>
 
     <script src="script.js"></script>
