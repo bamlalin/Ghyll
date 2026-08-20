@@ -16,14 +16,10 @@ function resizeGame() {
 
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
+    const scale = Math.min(windowWidth / baseWidth, windowHeight / baseHeight) * 0.95;
 
-    // คำนวณสเกลโดยยึดสัดส่วนเดิม เพื่อให้ทุกอย่างย่อ/ขยายเท่ากันหมดเหมือนรูปภาพ
-    const scaleX = windowWidth / baseWidth;
-    const scaleY = windowHeight / baseHeight;
-    const scale = Math.min(scaleX, scaleY);
-
-    // ล็อกสเกลให้เท่ากันทั้ง X และ Y ตัดปัญหาการบีบรูปร่าง
     table.style.transform = `scale(${scale})`;
+    table.style.transformOrigin = 'center center';
 }
 
 window.addEventListener('resize', resizeGame);
