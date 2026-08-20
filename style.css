@@ -61,28 +61,6 @@ html, body {
     opacity: 0.9;
 }
 
-/* กรอบ Empty Spot บนผ้าสักหลาด */
-.table-spot-outline {
-    position: absolute;
-    width: 140px;
-    height: 90px;
-    border: 2px dashed rgba(255, 255, 255, 0.35);
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.45);
-    z-index: 1;
-}
-
-.spot-top-outline   { top: 25%; left: 50%; transform: translateX(-50%); }
-.spot-left-outline  { left: 20vw; top: 53%; transform: translateY(-50%); }
-.spot-right-outline { right: 20vw; top: 53%; transform: translateY(-50%); }
-
-.outline-icon { font-size: 1.8rem; margin-bottom: -2px; }
-.outline-text { font-size: 0.8rem; }
-
 /* ==========================================================================
     3. PLAYER SLOTS & AVATARS
    ========================================================================== */
@@ -303,13 +281,13 @@ html, body {
 }
 
 .slot-top .opponent-hand {
-    top: 185px;
+    top: 170px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .slot-left .opponent-hand {
-    left: 250px;
+    left: 220px;
     top: 45%;
     transform: translateY(-50%) rotate(90deg);
 }
@@ -322,7 +300,7 @@ html, body {
 }
 
 .slot-right .opponent-hand {
-    right: 250px;
+    right: 220px;
     top: 45%;
     transform: translateY(-50%) rotate(-90deg) rotateY(25deg);
 }
@@ -625,21 +603,70 @@ html, body {
     cursor: pointer;
 }
 
-/* ตัวอย่าง CSS สำหรับเช็กว่าถ้าเป็นมือถือและอยู่ในแนวตั้ง (Portrait) ให้แสดงหน้าต่างเตือน */
+/* 1. เช็กถ้าเป็นมือถือแนวตั้ง ให้แสดงป้ายเตือนให้พลิกจอ */
 @media screen and (max-width: 768px) and (orientation: portrait) {
     .rotate-device-warning {
-        display: flex !important; /* แสดงป้ายเตือนให้พลิกจอ */
+        display: flex !important;
     }
     .table-container {
-        display: none !important; /* ซ่อนกระดานเกมไว้ก่อนจนกว่าจะพลิกแนวนอน */
+        display: none !important;
     }
 }
 
+.rotate-device-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #111111;
+    color: #ffffff;
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+
+.warning-content {
+    font-family: 'Kanit', sans-serif;
+}
+
+.warning-content h2 {
+    margin-top: 15px;
+    align-items: center;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #ffc400;
+}
+
+.warning-content p {
+    margin-top: 8px;
+    align-items: center;
+    text-align: center;
+    font-size: 1rem;
+    color: #cccccc;
+}
+
+.text p {
+    margin-top: -420px;
+    font-size: 0.7rem;
+    color: #cccccc;
+}
+
+.text2 p {
+    margin-top: 800px;
+    font-size: 0.7rem;
+    color: #cccccc;
+}
+
+/* 2. ตั้งค่าพื้นฐานสำหรับจอคอมพิวเตอร์และหน้าจอทั่วไป */
 html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #1e1e1e;
+    background: #111;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -651,6 +678,8 @@ html, body {
     height: 720px;
     position: relative;
     background: url('assets/dec/wooden_table_bg.jpg') no-repeat center center;
-    background-size: 100% 100%; /* บังคับให้ภาพโต๊ะฟิตพอดีกับกรอบ 1280x720 เป๊ะๆ ไม่ล้น */
+    background-size: cover; 
     transform-origin: center center;
+    flex-shrink: 0;
 }
+

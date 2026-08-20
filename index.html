@@ -10,6 +10,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
+    <!-- ป้ายเตือนให้พลิกแนวนอน -->
+    <div class="rotate-device-warning" id="rotateWarning">
+        <div class="text">
+            <p>ไปอ่านขวาล่าง</p>
+        </div>
+        <div class="warning-content">
+            <h2>คำเตือน!</h2>
+            <h2>อ่านซ้ายบน</h2>
+            <p>ไม่ต้องสงสัยถ้าอยากเล่นก็พลิกซะ</p>
+            
+        </div>
+        <div class="text2">
+            <p>อ่านทำไม</p>
+        </div>
+    </div>
+
     <div class="table-container">
 
         <!-- ป๊อปอัปกรอกชื่อ -->
@@ -34,19 +51,6 @@
             <div class="timer-display hidden" id="timerDisplay">
                 <span class="timer-label" id="timerLabel">PHASE 1: DISCARD</span>
                 <div class="timer-count" id="timerCount">15</div>
-            </div>
-
-            <div class="table-spot-outline spot-top-outline">
-                <div class="outline-icon">👤</div>
-                <div class="outline-text">Empty Spot</div>
-            </div>
-            <div class="table-spot-outline spot-left-outline">
-                <div class="outline-icon">👤</div>
-                <div class="outline-text">Empty Spot</div>
-            </div>
-            <div class="table-spot-outline spot-right-outline">
-                <div class="outline-icon">👤</div>
-                <div class="outline-text">Empty Spot</div>
             </div>
 
             <!-- Player 1 (YOU) -->
@@ -123,9 +127,9 @@
     <div id="avatarModal" class="avatar-modal hidden">
         <div class="avatar-modal-content">
             <button id="btnCloseAvatarModal" class="close-modal-btn">✕</button>
-            <h3>เลือกรูปโปรไฟล์ (AVATAR SELECTOR)</h3>
+            <h3>AVATAR SELECTOR</h3>
             <div id="avatarGrid" class="avatar-grid"></div>
-            <button id="btnConfirmAvatar" class="btn-confirm-avatar" disabled>ยืนยัน (SELECT)</button>
+            <button id="btnConfirmAvatar" class="btn-confirm-avatar" disabled>SELECT</button>
         </div>
     </div>
 

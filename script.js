@@ -1,4 +1,12 @@
-// --- 0. AUTO RESIZE & SCALE GAME TO FIT SCREEN ---
+// --- AUDIO SYSTEM ---
+const clickSound = new Audio('assets/sounds/click.wav'); 
+
+function playClickSound() {
+    clickSound.currentTime = 0;
+    clickSound.play().catch(e => console.log("รอการคลิกเพื่อปลดล็อกเสียง"));
+}
+
+// --- AUTO RESIZE & SCALE GAME (FIXED ASPECT RATIO) ---
 function resizeGame() {
     const table = document.querySelector('.table-container');
     if (!table) return;
@@ -9,7 +17,12 @@ function resizeGame() {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    const scale = Math.min(windowWidth / baseWidth, windowHeight / baseHeight);
+    // คำนวณสเกลโดยยึดสัดส่วนเดิม เพื่อให้ทุกอย่างย่อ/ขยายเท่ากันหมดเหมือนรูปภาพ
+    const scaleX = windowWidth / baseWidth;
+    const scaleY = windowHeight / baseHeight;
+    const scale = Math.min(scaleX, scaleY);
+
+    // ล็อกสเกลให้เท่ากันทั้ง X และ Y ตัดปัญหาการบีบรูปร่าง
     table.style.transform = `scale(${scale})`;
 }
 
@@ -38,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnNextRound = document.getElementById('btnNextRound');
 
     btnJoin?.addEventListener('click', () => {
+        playClickSound();
         const name = playerNickname ? playerNickname.value.trim() : '';
         if (name !== '' && displayPlayerName) {
             displayPlayerName.textContent = name.toUpperCase() + ' (YOU)';
@@ -51,9 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
         checkLobbyReady();
     });
 
-    if (btnDiscard) btnDiscard.addEventListener('click', handleDiscard);
-    if (btnFold) btnFold.addEventListener('click', () => handleDecision('fold'));
-    if (btnFight) btnFight.addEventListener('click', () => handleDecision('fight'));
+    if (btnDiscard) btnDiscard.addEventListener('click', () => {
+        playClickSound();
+        handleDiscard();
+    });
+
+    if (btnFold) btnFold.addEventListener('click', () => {
+        playClickSound();
+        handleDecision('fold');
+    });
+    if (btnFight) btnFight.addEventListener('click', () => {
+        playClickSound();
+        handleDecision('fight');
+    });
     if (btnNextRound) btnNextRound.addEventListener('click', startNewRound);
 });
 
@@ -152,6 +176,7 @@ function checkLobbyReady() {
         }
 
         btnReadyGame.onclick = () => {
+            playClickSound();
             if (me) {
                 me.isReady = !me.isReady;
                 me.isSpectator = !me.isReady;
@@ -468,6 +493,8 @@ function renderMyHand() {
 
         cardElement.addEventListener('click', () => {
             if (gameState.phase !== 'DISCARD' || gameState.players[gameState.currentTurnIndex].id !== 'player') return;
+
+            playClickSound();
 
             document.querySelectorAll('#myHandContainer .card-item').forEach(el => el.classList.remove('selected'));
             cardElement.classList.add('selected');
@@ -806,6 +833,7 @@ function closeAvatarModal() {
 }
 
 function confirmAvatarSelection() {
+    playClickSound();
     if (!selectedAvatarPath) return;
     const me = getMyPlayer();
     if (me) {
